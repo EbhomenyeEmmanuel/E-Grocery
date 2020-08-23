@@ -6,10 +6,6 @@
         android:bottomLeftRadius="@dimen/normal_spacing"
         android:bottomRightRadius="@dimen/normal_spacing"
         android:topRightRadius="@dimen/normal_spacing" />
-    <gradient
-        android:angle="180"
-        android:endColor="#055055"
-        android:startColor="#1FEB40"
-        android:type="linear" />
+    <solid android:color="#1FEB40" />
 
 </shape>
