@@ -57,7 +57,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout = drawer_layout
         val navView: NavigationView = nav_view
         navView.setNavigationItemSelectedListener(this)
-        toolbar.title = ""
         toolbar.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
         val toggle = ActionBarDrawerToggle(
             this,
