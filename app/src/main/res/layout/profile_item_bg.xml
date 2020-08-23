@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:background="@color/nav_view_color"
+    android:padding="@dimen/standard_spacing">
+
+    <ImageView
+        android:id="@+id/ivfoodIcon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/ecx_profile_bg"
+        android:contentDescription="@string/food_icon_for_menu"
+        android:src="@drawable/ecx_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_spacing"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/ivfoodIcon"
+        app:layout_constraintStart_toEndOf="@+id/ivfoodIcon"
+        app:layout_constraintTop_toTopOf="@+id/ivfoodIcon">
+
+        <TextView
+            android:id="@+id/profileName"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/normal_spacing"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:text="Onions"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+        <TextView
+            android:id="@+id/profileEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/normal_spacing"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="@dimen/normal_spacing"
+            android:layout_weight="1"
+            android:text="ecx@gmail.com"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+        <TextView
+            android:id="@+id/profileAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/normal_spacing"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="@dimen/normal_spacing"
+            android:layout_weight="1"
+            android:text="no 2, loren ipsum Nigeria" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
