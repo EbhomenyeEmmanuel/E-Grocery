@@ -31,6 +31,7 @@ lateinit var bind: ActivitySignUpBinding
     override fun onSuccess(successMessage: String) {
         shortToast(successMessage)
         startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 
     override fun onError(errorMessage: String, errorCode: Int) {

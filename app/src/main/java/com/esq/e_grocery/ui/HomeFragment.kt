@@ -17,6 +17,7 @@ import com.esq.e_grocery.data.HomePopularMenuAdapter
 import com.esq.e_grocery.data.HorizontalCarouselAdapter
 import com.esq.e_grocery.domain.model.Item
 import com.esq.e_grocery.domain.model.PopularMenuItem
+import com.esq.e_grocery.utils.UtilAnimations
 import com.esq.e_grocery.utils.shortToast
 import com.esq.e_grocery.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.home_fragment.*
@@ -48,6 +49,8 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        UtilAnimations.fadeInAnimation(home)
+        UtilAnimations.hoverViewAnimation(imageView2)
         activity?.initHorizontalAdapter()
         activity?.initPopularAdapter()
 

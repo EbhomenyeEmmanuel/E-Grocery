@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.esq.e_grocery.R
 import com.esq.e_grocery.data.CategoriesAdapter
+import com.esq.e_grocery.utils.UtilAnimations
 import com.esq.e_grocery.viewmodel.CategoriesViewModel
 import kotlinx.android.synthetic.main.categories_fragment.*
 
@@ -35,6 +36,7 @@ class CategoriesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
+        UtilAnimations.fadeInAnimation(categories)
         activity?.initCategoriesAdapter()
     }
 

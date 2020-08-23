@@ -10,6 +10,7 @@ import com.esq.e_grocery.MainActivity
 import com.esq.e_grocery.R
 import com.esq.e_grocery.databinding.ActivityLoginBinding
 import com.esq.e_grocery.domain.interfaces.AutheResultCallback
+import com.esq.e_grocery.utils.UtilAnimations
 import com.esq.e_grocery.utils.requestFocusWithErrorMessage
 import com.esq.e_grocery.utils.shortToast
 import com.esq.e_grocery.viewmodel.LoginViewModel
@@ -25,6 +26,7 @@ class LoginActivity : AppCompatActivity(), AutheResultCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bind = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        UtilAnimations.fadeInAnimation(bind.login)
         bind.viewModel = _viewModel
     }
 

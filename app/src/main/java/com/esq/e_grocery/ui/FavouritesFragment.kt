@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.esq.e_grocery.R
 import com.esq.e_grocery.data.FavouritesAdapter
+import com.esq.e_grocery.utils.UtilAnimations
 import com.esq.e_grocery.viewmodel.FavouritesViewModel
 import kotlinx.android.synthetic.main.favourites_fragment.*
 
@@ -35,6 +36,7 @@ class FavouritesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(FavouritesViewModel::class.java)
+        UtilAnimations.fadeInAnimation(favourites)
         activity?.initFavouriteAdapter()
     }
 
