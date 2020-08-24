@@ -1,8 +1,10 @@
 package com.esq.e_grocery.viewmodel
 
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.esq.e_grocery.domain.interfaces.AutheResultCallback
@@ -133,7 +135,7 @@ class SignUpViewModel(
 
     //Write method to process Login
     fun onSignUpClicked(view: View) {
-        when (val errorCode: Int = signUpUserModel.isValidData) {
+        when (val errorCode: Int = isValidData(signUpUserModel)) {
             1, 4 -> {
                 resultCallback.onError("Please enter a valid Email", errorCode)
             }
@@ -166,6 +168,24 @@ class SignUpViewModel(
             }
         }
     }
+
+    //Validate editText
+    private fun isValidData(signUpUserModel: SignUpUserModel): Int  = //Validate editText
+            if (TextUtils.isEmpty(signUpUserModel.email)) {
+                1
+            } else if (TextUtils.isEmpty(signUpUserModel.userName)) {
+                2
+            } else if (TextUtils.isEmpty(signUpUserModel.homeAddress)) {
+                3
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(signUpUserModel.email).matches()) {
+                4
+            } else if (TextUtils.isEmpty(signUpUserModel.password) || TextUtils.isEmpty(signUpUserModel.confirmPassword)) {
+                5
+            } else if (signUpUserModel.password.length < 6 || signUpUserModel.confirmPassword.length < 6) {
+                6
+            } else if (signUpUserModel.password != signUpUserModel.confirmPassword) {
+                7
+            } else 8
 
     fun onSendIntent(view: View) {
         Log.d(TAG, "onSendLoginIntent: ")

@@ -1,8 +1,10 @@
 package com.esq.e_grocery.viewmodel
 
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.esq.e_grocery.domain.interfaces.AutheResultCallback
@@ -79,7 +81,7 @@ class LoginViewModel(
     //Write method to process Login - Button is clicked
     fun onLoginClicked(view: View?) {
         Log.d(TAG, "onLoginClicked: ")
-        val errorCode: Int = loggedUserModel.isValidData
+        val errorCode: Int = isValidData(loggedUserModel.userPassword, loggedUserModel.userEmail)
         if (errorCode == 1) {
             autheResultCallback.onError("Email is required", errorCode)
         } else if (errorCode == 2) {
@@ -89,7 +91,7 @@ class LoginViewModel(
         } else if (errorCode == 4) {
             autheResultCallback.onError("Password cannot be less than 6", errorCode)
         } else if (errorCode == 5) {
-            //Set usercredentials in a string array since login data has been validated
+            //Set userCredentials in a string array since login data has been validated
             val arrayOfCredentials = arrayOf(
                 loggedUserModel.userEmail,
                 loggedUserModel.userPassword
@@ -98,6 +100,21 @@ class LoginViewModel(
             autheResultCallback.onSuccess(successMessage = loginCall(arrayOfCredentials))
         }
     }
+
+    //Validate editText
+    private fun isValidData(
+        userPassword: String,
+        userEmail: String
+    ): Int =
+        if (TextUtils.isEmpty(userEmail)) {
+            1
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()) {
+            2
+        } else if (TextUtils.isEmpty(userPassword)) {
+            3
+        } else if (userPassword.length < 6) {
+            4
+        } else 5
 
     //Login by calling repo
     private fun loginCall(
