@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "923447478609",
+    "firebase_url": "https://e-grocery-4687c.firebaseio.com",
+    "project_id": "e-grocery-4687c",
+    "storage_bucket": "e-grocery-4687c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:923447478609:android:e3b5c268ec08fab290eb70",
+        "android_client_info": {
+          "package_name": "com.esq.e_grocery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "923447478609-52kqqm4aff2o099dhrh740ful04j5tl9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.esq.e_grocery",
+            "certificate_hash": "e74e48cb3a141eba9603d264b40a9f665d1ae848"
+          }
+        },
+        {
+          "client_id": "923447478609-jdlq5nuph2u31o6ffpbcqmt3ncskudn5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzcdMwuYWpjg2jMoec2WpJsX9d-Yu7kSE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "923447478609-jdlq5nuph2u31o6ffpbcqmt3ncskudn5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
