@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.esq.e_grocery.utils.StringUtil" />
+        <variable
+            name="iMainActivity"
+            type="com.esq.e_grocery.domain.interfaces.IMainActivity" />
+
+        <variable
+            name="product"
+            type="com.esq.e_grocery.domain.model.PopularProducts" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:onClick="@{() -> iMainActivity.inflateViewProductFragment(product)}"
+        >
+
+        <ImageView
+            android:id="@+id/ivfoodIcon"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:contentDescription="@string/food_icon_for_menu"
+            app:imageUrl="@{product.menuIcon}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearlayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/normal_spacing"
+            android:padding="@dimen/standard_spacing"
+            app:layout_constraintBottom_toBottomOf="@id/ivfoodIcon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivfoodIcon"
+            app:layout_constraintTop_toTopOf="@+id/ivfoodIcon">
+
+            <TextView
+                android:id="@+id/tvfoodName"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:text="@{product.foodName, default=`Rice`}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvFoodWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:text="@{StringUtil.getWeightString(product.foodWeight), default=`Net wt. 3kg`}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tvFoodPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:text="@{StringUtil.getFoodPriceString(product.foodPrice), default=`₦100`}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvfoodName" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
