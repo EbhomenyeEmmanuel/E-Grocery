@@ -56,4 +56,7 @@
     <string name="payment_method">Payment Method</string>
     <string name="change_password">Change Password</string>
     <string name="popular_menu">Popular Menu</string>
+    <string name="intent_product">intent_product</string>
+    <string name="view_product_transaction">View Product Transaction</string>
+
 </resources>
