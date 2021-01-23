@@ -2,7 +2,7 @@ package com.esq.e_grocery.data
 
 import com.esq.e_grocery.R
 import com.esq.e_grocery.domain.model.Item
-import com.esq.e_grocery.domain.model.PopularMenuItem
+import com.esq.e_grocery.domain.model.PopularProducts
 
 class HomeRepository {
 
@@ -18,13 +18,13 @@ class HomeRepository {
             Item(R.drawable.categories3)
         )
         val popularRvMenuData = listOf(
-            PopularMenuItem(R.drawable.onion, R.string.onion, 1, 100),
-            PopularMenuItem(R.drawable.banana, R.string.fresh_banana, 2, 120),
-            PopularMenuItem(R.drawable.meat, R.string.meat, 3, 160),
-            PopularMenuItem(R.drawable.banana,R.string.chicken, 6, 140),
-            PopularMenuItem(R.drawable.meat, R.string.rice, 4, 150),
-            PopularMenuItem(R.drawable.banana, R.string.fresh_banana, 3, 160),
-            PopularMenuItem(R.drawable.meat, R.string.meat, 6, 140)
+            PopularProducts(R.drawable.onion, R.string.onion, 1, 100),
+            PopularProducts(R.drawable.banana, R.string.fresh_banana, 2, 120),
+            PopularProducts(R.drawable.meat, R.string.meat, 3, 160),
+            PopularProducts(R.drawable.banana,R.string.chicken, 6, 140),
+            PopularProducts(R.drawable.meat, R.string.rice, 4, 150),
+            PopularProducts(R.drawable.banana, R.string.fresh_banana, 3, 160),
+            PopularProducts(R.drawable.meat, R.string.meat, 6, 140)
         )
     }
 }
