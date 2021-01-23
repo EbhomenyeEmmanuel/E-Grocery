@@ -8,16 +8,21 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.esq.e_grocery.domain.interfaces.IMainActivity
+import com.esq.e_grocery.domain.model.PopularProducts
+import com.esq.e_grocery.ui.ViewProductFragment
+import com.esq.e_grocery.utils.Constants
 import com.esq.e_grocery.utils.shortToast
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,IMainActivity {
     private lateinit var drawerLayout: DrawerLayout
 
     private lateinit var navController: NavController
@@ -94,5 +99,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun inflateViewProductFragment(item: PopularProducts) {
+        val fragment: ViewProductFragment = ViewProductFragment.newInstance()
+
+        val bundle: Bundle = Bundle()
+        bundle.putParcelable(getString(R.string.intent_product), item)
+        fragment.arguments = bundle
+
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container_view_tag, fragment, getString(Constants.VIEW_PRODUCT_TRANSACTION))
+        transaction.addToBackStack(getString(Constants.VIEW_PRODUCT_TRANSACTION))
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        transaction.commit()
     }
 }
