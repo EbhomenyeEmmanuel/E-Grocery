@@ -9,24 +9,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.esq.e_grocery.R
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 import com.esq.e_grocery.data.HomePopularMenuAdapter
 import com.esq.e_grocery.data.HorizontalCarouselAdapter
+import com.esq.e_grocery.databinding.HomeFragmentBinding
+import com.esq.e_grocery.domain.interfaces.SearchQueryResultCallback
 import com.esq.e_grocery.domain.model.Item
-import com.esq.e_grocery.domain.model.PopularMenuItem
 import com.esq.e_grocery.utils.UtilAnimations
 import com.esq.e_grocery.utils.shortToast
 import com.esq.e_grocery.viewmodel.HomeViewModel
-import kotlinx.android.synthetic.main.home_fragment.*
-import kotlinx.android.synthetic.main.popular_menu_item_list.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.esq.e_grocery.viewmodel.HomeViewModelFactory
 
-class HomeFragment : Fragment() {
+/***
+ * [Fragment] for showing the main UI
+ */
+class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, SearchQueryResultCallback {
 
     companion object {
         private val TAG = this::class.java.simpleName
@@ -36,78 +35,85 @@ class HomeFragment : Fragment() {
     var noOfItems: Int = 0
     lateinit var itemCarouselAdapter: HorizontalCarouselAdapter
     lateinit var homePopularMenuAdapter: HomePopularMenuAdapter
+    lateinit var bind: HomeFragmentBinding
 
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by lazy {
+        val activity = requireNotNull(this.activity) {
+            "You can only access the viewModel after onActivityCreated()"
+        }
+        ViewModelProvider(this, HomeViewModelFactory(this)).get(HomeViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.home_fragment, container, false)
+        bind = HomeFragmentBinding.inflate(inflater)
+       bind.swipeRefreshLayout.setOnRefreshListener(this)
+        return bind.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (viewModel.isNewlyCreated && savedInstanceState != null) {
+            viewModel.restoreState(savedInstanceState)
+        }
+        viewModel.isNewlyCreated = false
+    }
+
+    override fun onRefresh() {
+        viewModel.mMenuData.observe(viewLifecycleOwner, Observer {
+            (bind.recyclerView2.adapter as HomePopularMenuAdapter).refreshList(it)
+        })
+        onItemLoadComplete()
+    }
+
+    private fun onItemLoadComplete() {
+        bind.recyclerView2.adapter?.notifyDataSetChanged()
+        bind.swipeRefreshLayout.isRefreshing = false
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        UtilAnimations.fadeInAnimation(home)
-        UtilAnimations.hoverViewAnimation(imageView2)
+        bind.viewModel = viewModel
+        UtilAnimations.fadeInAnimation(bind.home)
+        UtilAnimations.hoverViewAnimation(bind.imageView2)
         activity?.initHorizontalAdapter()
-        activity?.initPopularAdapter()
+        initPopularList()
 
     }
 
     private fun Context.initHorizontalAdapter() {
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        recyclerView.layoutManager = layoutManager
+        bind.recyclerView.layoutManager = layoutManager
         viewModel.horizontalCategoriesRvData.observe(viewLifecycleOwner, Observer {
             Log.d(TAG, "Carousel Items is $it")
             itemCarouselAdapter = HorizontalCarouselAdapter(this, it) { position: Int, item: Item ->
                 activity?.shortToast("Pos ${position}")
             }
-            recyclerView.adapter = itemCarouselAdapter
+            bind.recyclerView.adapter = itemCarouselAdapter
         })
     }
 
-    private fun Context.initPopularAdapter() {
-        val layoutManager = LinearLayoutManager(this)
-        layoutManager.orientation = LinearLayoutManager.VERTICAL
-        recyclerView2.layoutManager = layoutManager
-        viewModel.menuData.observe(viewLifecycleOwner, Observer {
+    private fun initPopularList() {
+        viewModel.mMenuData.observe(viewLifecycleOwner, Observer {
             Log.d(TAG, "Popular Items is $it")
-            homePopularMenuAdapter =
-                HomePopularMenuAdapter(this, it) { i: Int, popularMenuItem: PopularMenuItem ->
-                    /* when (i) {
-                          1 -> {
-                              Log.d(TAG, "1 Clicked")
-                              ibSingleAddItem.visibility = View.GONE
-                              layout4Cart.visibility = View.VISIBLE
-                              ++noOfItems
-                          }
-                          2, 3 -> {
-                              Log.d(TAG, "$i clicked")
-                              setListenersForItemClicked()
-                          }
-                      } */
-                }
-
-            recyclerView2.adapter = homePopularMenuAdapter
+            bind.popularItemList = it
         })
-
     }
 
-    private fun setListenersForItemClicked() {
-        ibSubtractItem.setOnClickListener { if (noOfItems >= 1) --noOfItems }
-        ibAddItem.setOnClickListener { ++noOfItems }
-        lifecycleScope.launch {
-            withContext(Dispatchers.Main) {
-                if (noOfItems == 0) {
-                    layout4Cart.visibility = View.GONE
-                    ibSingleAddItem.visibility = View.VISIBLE
-                }
-                Log.d(TAG, "Number of items variable is $noOfItems")
-                tvNoOfItem.text = "$noOfItems"
-            }
-        }
+    override fun onSaveInstanceState(outState: Bundle) {
+            viewModel.saveState(outState)
     }
+
+    override fun onSuccessfulQuery(mSearchQuery: String?) {
+        val searchQuery = viewModel.searchKey
+        //TODO Use search key to search
+    }
+
+    override fun onFailedQuery(errorMessage: String) {
+        activity?.shortToast(errorMessage)
+    }
+
 }
