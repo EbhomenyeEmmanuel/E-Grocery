@@ -1,6 +1,6 @@
 package com.esq.e_grocery.utils;
 
-import com.esq.e_grocery.domain.model.PopularMenuItem;
+import com.esq.e_grocery.domain.model.PopularProducts;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -11,7 +11,7 @@ public class FireBaseUtil {
     public static DatabaseReference sDatabaseReference;
 
     private static FireBaseUtil sfireBaseUtil;
-    public static ArrayList<PopularMenuItem> sPopularMenuItems;
+    public static ArrayList<PopularProducts> sPopularProducts;
 
     private FireBaseUtil(){}
 
@@ -19,7 +19,7 @@ public class FireBaseUtil {
         if (sfireBaseUtil == null) {
             sfireBaseUtil = new FireBaseUtil();
             sFirebaseDatabase = FirebaseDatabase.getInstance();
-            sPopularMenuItems = new ArrayList<PopularMenuItem>();
+            sPopularProducts = new ArrayList<PopularProducts>();
         }
         sDatabaseReference = sFirebaseDatabase.getReference().child(ref);
     }
