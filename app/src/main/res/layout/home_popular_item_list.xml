@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.esq.e_grocery.utils.StringUtil" />
+        <import type="com.esq.e_grocery.utils.StringUtils" />
         <variable
             name="iMainActivity"
             type="com.esq.e_grocery.domain.interfaces.IMainActivity" />
@@ -54,7 +54,7 @@
                 android:id="@+id/tvFoodWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:text="@{StringUtil.getWeightString(product.foodWeight), default=`Net wt. 3kg`}"
+                android:text="@{StringUtils.getWeightString(product.foodWeight), default=`Net wt. 3kg`}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -62,7 +62,7 @@
                 android:id="@+id/tvFoodPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:text="@{StringUtil.getFoodPriceString(product.foodPrice), default=`₦100`}"
+                android:text="@{StringUtils.getFoodPriceString(product.foodPrice), default=`₦100`}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvfoodName" />
